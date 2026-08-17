@@ -4,6 +4,9 @@
 """
 
 from abc import ABC, abstractmethod
+from pathlib import Path
+
+ENCODING = "utf-8-sig"
 
 
 class Loader(ABC):
@@ -23,7 +26,12 @@ class FileLoader(Loader):
 
     def load(self, path):
         """파일을 읽어 `parse` 에 넘깁니다."""
-        ...
+        path = Path(path)
+        if not path.is_file():
+            raise FileNotFoundError(f"파일을 찾을 수 없습니다: {path}")
+        if not self.supports(path):
+            raise ValueError(f"이 로더가 다루지 않는 형식입니다: {path.name}")
+        return self.parse(path.read_text(encoding=ENCODING))
 
     @abstractmethod
     def supports(self, path):
