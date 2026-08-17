@@ -1,0 +1,23 @@
+[project]
+name = "expense-settlement-lab"
+version = "0.1.0"
+description = "경비 정산 시스템 실습"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+settle = "application.cli.main:main"
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/core", "src/application"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

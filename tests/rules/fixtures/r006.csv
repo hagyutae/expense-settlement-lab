@@ -1,0 +1,5 @@
+﻿claim_id,employee_id,employee_name,department,used_date,claim_date,expense_type,amount,payment_method,merchant,merchant_category,evidence,attendees,receipt_no,card_no,bank_account,resident_no,note
+EXP-2026-0021,E20391,김민준,영업1팀,2026-07-01,2026-07-06,식비,45000,법인카드,이온식당 강남점,음식점,Y,1,R-20260706-0021,,,,
+EXP-2026-0022,E20391,김민준,영업1팀,2026-07-02,2026-07-06,식비,130000,법인카드,본가설렁탕,음식점,Y,4,R-20260707-0022,,,,
+EXP-2026-0023,E20391,김민준,영업1팀,2026-07-03,2026-07-06,식비,28000,법인카드,미소야 역삼점,음식점,Y,1,,,,,
+EXP-2026-0024,E20391,김민준,영업1팀,2026-07-06,2026-07-06,식비,90000,법인카드,한우담 서초점,음식점,Y,3,R-20260709-0023,,,,

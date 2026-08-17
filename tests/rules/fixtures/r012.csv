@@ -1,0 +1,5 @@
+﻿claim_id,employee_id,employee_name,department,used_date,claim_date,expense_type,amount,payment_method,merchant,merchant_category,evidence,attendees,receipt_no,card_no,bank_account,resident_no,note
+EXP-2026-0045,E20391,김민준,영업1팀,2026-07-01,2026-07-06,접대비,150000,법인카드,한우담 서초점,음식점,Y,2,R-20260706-0051,,,,
+EXP-2026-0046,E20391,김민준,영업1팀,2026-07-02,2026-07-06,접대비,330000,법인카드,목로주점 강남,주점,Y,4,R-20260707-0052,,,,
+EXP-2026-0047,E20391,김민준,영업1팀,2026-07-03,2026-07-06,접대비,100000,법인카드,한우담 서초점,음식점,Y,2,R-20260708-0053,,,,
+EXP-2026-0048,E20391,김민준,영업1팀,2026-07-06,2026-07-06,접대비,180000,법인카드,목로주점 강남,주점,Y,4,R-20260709-0054,,,,

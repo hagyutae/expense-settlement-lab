@@ -1,0 +1,5 @@
+﻿claim_id,employee_id,employee_name,department,used_date,claim_date,expense_type,amount,payment_method,merchant,merchant_category,evidence,attendees,receipt_no,card_no,bank_account,resident_no,note
+EXP-2026-0057,E20391,김민준,영업1팀,2026-07-01,2026-07-06,식비,25000,법인카드,교보문고 강남점,서점,Y,1,,,,,
+EXP-2026-0058,E20391,김민준,영업1팀,2026-07-02,2026-07-06,교통비,28000,법인카드,이온식당 강남점,음식점,Y,,,,,,
+EXP-2026-0059,E20391,김민준,영업1팀,2026-07-03,2026-07-06,도서구입비,25000,법인카드,교보문고 강남점,서점,Y,,,,,,
+EXP-2026-0060,E20391,김민준,영업1팀,2026-07-06,2026-07-06,통신비,48000,법인카드,KT 기업영업,통신,Y,,R-20260709-0071,,,,

@@ -1,0 +1,5 @@
+﻿claim_id,employee_id,employee_name,department,used_date,claim_date,expense_type,amount,payment_method,merchant,merchant_category,evidence,attendees,receipt_no,card_no,bank_account,resident_no,note
+EXP-2026-0005,E20391,김민준,영업1팀,2026-07-01,2026-07-06,소모품비,0,법인카드,오피스디포 역삼점,문구,Y,,,,,,
+EXP-2026-0006,E20391,김민준,영업1팀,2026-07-01,2026-07-06,소모품비,-15000,법인카드,오피스디포 역삼점,문구,Y,,,,,,
+EXP-2026-0007,E20391,김민준,영업1팀,2026-07-01,2026-07-06,소모품비,12000,법인카드,오피스디포 역삼점,문구,Y,,,,,,
+EXP-2026-0008,E20391,김민준,영업1팀,2026-07-01,2026-07-06,소모품비,8000,법인카드,오피스디포 역삼점,문구,Y,,,,,,

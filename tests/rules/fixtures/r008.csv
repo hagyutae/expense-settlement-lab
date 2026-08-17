@@ -1,0 +1,5 @@
+﻿claim_id,employee_id,employee_name,department,used_date,claim_date,expense_type,amount,payment_method,merchant,merchant_category,evidence,attendees,receipt_no,card_no,bank_account,resident_no,note
+EXP-2026-0029,E20391,김민준,영업1팀,2026-07-01,2026-07-06,교통비,150000,법인카드,코레일,교통,Y,,R-20260706-0041,,,,
+EXP-2026-0030,E20391,김민준,영업1팀,2026-07-02,2026-07-06,교통비,120000,법인카드,서울택시,교통,Y,,R-20260707-0042,,,,
+EXP-2026-0031,E20391,김민준,영업1팀,2026-07-03,2026-07-06,교통비,18500,법인카드,카카오T,교통,Y,,,,,,
+EXP-2026-0032,E20391,김민준,영업1팀,2026-07-06,2026-07-06,교통비,88000,법인카드,코레일,교통,Y,,R-20260709-0043,,,,

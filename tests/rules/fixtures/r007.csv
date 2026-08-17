@@ -1,0 +1,5 @@
+﻿claim_id,employee_id,employee_name,department,used_date,claim_date,expense_type,amount,payment_method,merchant,merchant_category,evidence,attendees,receipt_no,card_no,bank_account,resident_no,note
+EXP-2026-0025,E20391,김민준,영업1팀,2026-07-01,2026-07-06,숙박비,250000,법인카드,신라스테이 역삼,숙박,Y,,R-20260706-0031,,,,
+EXP-2026-0026,E20391,김민준,영업1팀,2026-07-02,2026-07-06,숙박비,310000,법인카드,베스트웨스턴 부산,숙박,Y,,R-20260707-0032,,,,
+EXP-2026-0027,E20391,김민준,영업1팀,2026-07-03,2026-07-06,숙박비,180000,법인카드,신라스테이 역삼,숙박,Y,,R-20260708-0033,,,,
+EXP-2026-0028,E20391,김민준,영업1팀,2026-07-06,2026-07-06,숙박비,150000,법인카드,베스트웨스턴 부산,숙박,Y,,R-20260709-0034,,,,
