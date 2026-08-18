@@ -21,22 +21,7 @@ docs/                 규정과 명세
 
 ## 코딩 컨벤션
 
-### 규칙 추가
-
-- 규칙 파일은 `src/core/domain/rules/rXXX_영문설명.py` 로 만듭니다.
-- 단건 규칙은 `RowRule`, 다건 규칙은 `BatchRule` 을 상속합니다. 어느 쪽인지는 규정 항목 제목에 적혀 있습니다.
-- `code` 와 `name` 은 규정 항목 제목에서 그대로 가져옵니다.
-- 테스트는 `tests/rules/test_rXXX.py` 에 만들고 픽스처 `tests/rules/fixtures/rXXX.csv` 를 씁니다.
-- **등록은 두 곳입니다.** `src/application/container.py` 의 `build_service` 와 `tests/container.py` 의 `all_rules` 입니다. 한 곳만 하면 실행 결과와 테스트 결과가 어긋납니다.
-
-새 규칙은 @src/core/domain/rules/r001_required_fields.py 의 구조를 따릅니다.
-
-판정 조건과 위반 문구는 규정 문서를 그대로 따릅니다.
-
-@docs/경비규정.md
-
-데이터 속성 이름은 `docs/데이터-스키마.md` 에 있습니다. 규칙마다 보는 문서가 아니므로
-경로만 적습니다.
+- 구현체는 `src/application/container.py` 와 `tests/container.py` 에서 조립합니다. 두 곳 모두에 등록해야 실행 결과와 테스트 결과가 일치합니다.
 
 ### 금지
 

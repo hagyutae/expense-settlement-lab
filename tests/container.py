@@ -14,6 +14,13 @@ from core.domain.rules.r007_lodging_limit import R007
 from core.domain.rules.r008_transport_limit import R008
 from core.domain.rules.r009_payment_method import R009
 from core.domain.rules.r010_receipt_no_duplicated import R010
+from core.domain.rules.r011_entertainment_attendees import R011
+from core.domain.rules.r012_entertainment_per_person import R012
+from core.domain.rules.r013_weekend_preapproval import R013
+from core.domain.rules.r014_evidence_missing import R014
+from core.domain.rules.r015_category_merchant import R015
+from core.domain.rules.r016_personal_card_reason import R016
+from core.domain.rules.r018_cash_limit import R018
 from core.service.usecase.settlement import RuleBasedSettlementService
 
 
@@ -22,6 +29,8 @@ def all_rules():
     return [
         R001(), R002(), R003(), R004(), R005(),
         R006(), R007(), R008(), R009(), R010(),
+        R011(), R012(), R013(), R014(), R015(),
+        R016(), R018(),
     ]
 
 
