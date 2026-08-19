@@ -3,14 +3,38 @@
     "PYTHONUTF8": "1",
     "PYTHONIOENCODING": "utf-8"
   },
+  "cleanupPeriodDays": 14,
   "permissions": {
-    "deny": ["Edit(tests/golden/**)"]
+    "defaultMode": "manual",
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ],
+    "ask": [
+      "Bash(git commit:*)"
+    ],
+    "deny": [
+      "Bash(rm:*)",
+      "Bash(git push:*)",
+      "Edit(tests/golden/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(**/.env*)",
+      "Read(**/secrets/**)",
+      "Read(**/credentials/**)",
+      "Read(~/.claude/settings.json)"
+    ]
   },
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
-          { "type": "command", "command": "uv run python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/session-state.py\"", "timeout": 120 }
+          {
+            "type": "command",
+            "command": "uv run python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/session-state.py\"",
+            "timeout": 120
+          }
         ]
       }
     ],
@@ -18,7 +42,42 @@
       {
         "matcher": "Bash",
         "hooks": [
-          { "type": "command", "command": "uv run python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-registration.py\"", "timeout": 60 }
+          {
+            "type": "command",
+            "command": "uv run python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-registration.py\"",
+            "timeout": 60
+          }
+        ]
+      },
+      {
+        "matcher": "WebFetch|WebSearch|mcp__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/guard.py\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash|Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/mask.py\"",
+            "timeout": 60
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/audit.py\"",
+            "timeout": 60
+          }
         ]
       }
     ]
