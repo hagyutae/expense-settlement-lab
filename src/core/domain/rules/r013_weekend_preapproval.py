@@ -2,10 +2,12 @@
 
 from core.domain.models import Violation
 from core.domain.rules.base import RowRule
+from core.domain.rules.registry import rule
 
 PREAPPROVAL_PREFIX = "A-"
 
 
+@rule
 class R013(RowRule):
     code = "R013"
     name = "주말 사용 사전승인"

@@ -4,8 +4,10 @@ from collections import defaultdict
 
 from core.domain.models import Violation
 from core.domain.rules.base import BatchRule
+from core.domain.rules.registry import rule
 
 
+@rule
 class R010(BatchRule):
     code = "R010"
     name = "영수증번호 중복 사용"

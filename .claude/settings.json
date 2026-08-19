@@ -40,16 +40,6 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "uv run python \"${CLAUDE_PROJECT_DIR}/.claude/hooks/check-registration.py\"",
-            "timeout": 60
-          }
-        ]
-      },
-      {
         "matcher": "WebFetch|WebSearch|mcp__.*",
         "hooks": [
           {

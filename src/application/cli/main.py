@@ -18,6 +18,7 @@ def main():
     parser.add_argument("path", help="경비 청구 파일 경로")
     parser.add_argument("--in", dest="fmt_in", default=None, help="입력 형식. 생략하면 확장자로 판단")
     parser.add_argument("--out", dest="fmt_out", default="console", help="출력 형식")
+    parser.add_argument("--save", dest="save", default=None, help="결과를 저장할 파일 경로")
     args = parser.parse_args()
 
     # 확장자로 형식을 정하는 일은 진입점의 몫이다. 조립은 형식 이름만 받는다.
@@ -31,7 +32,16 @@ def main():
         print(e, file=sys.stderr)
         return 1
 
-    print(reporter.format(build_service().settle(expenses)))
+    text = reporter.format(build_service().settle(expenses))
+
+    # 리포터는 문자열만 돌려준다. 파일로 남기는 일은 진입점이 맡는다.
+    if args.save:
+        target = Path(args.save)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(text, encoding="utf-8")
+        print(f"저장했습니다: {args.save}")
+    else:
+        print(text)
     return 0
 
 

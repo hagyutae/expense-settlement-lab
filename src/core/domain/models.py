@@ -76,8 +76,21 @@ class Judgement:
         return not self.violations
 
 
+class AggregationTable:
+    """집계 하나가 만들어 낸 표."""
+
+    def __init__(self, name, columns, rows):
+        self.name = name
+        self.columns = list(columns)
+        self.rows = [list(row) for row in rows]
+
+    def __repr__(self):
+        return f"AggregationTable({self.name}, {len(self.rows)}행)"
+
+
 class SettlementResult:
     """정산 한 번의 결과 전체."""
 
-    def __init__(self, judgements):
+    def __init__(self, judgements, aggregations=()):
         self.judgements = list(judgements)
+        self.aggregations = list(aggregations)

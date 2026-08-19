@@ -2,11 +2,13 @@
 
 from core.domain.models import Violation
 from core.domain.rules.base import RowRule
+from core.domain.rules.registry import rule
 
 EXPENSE_TYPE = "교통비"
 LIMIT = 100_000
 
 
+@rule
 class R008(RowRule):
     code = "R008"
     name = "교통비 한도"

@@ -2,8 +2,10 @@
 
 from core.domain.models import Violation
 from core.domain.rules.base import RowRule
+from core.domain.rules.registry import rule
 
 
+@rule
 class R002(RowRule):
     code = "R002"
     name = "금액 유효성"

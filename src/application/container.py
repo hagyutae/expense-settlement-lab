@@ -1,34 +1,22 @@
 """조립.
 
 추상과 구현이 만나는 유일한 지점입니다.
-**규칙은 명시적으로 나열해 등록합니다. 모듈을 스캔해 자동으로 모으지 않습니다.**
+**규칙은 `load_rules()` 가 모읍니다. 이름을 나열하지 않습니다.**
 
-함수 이름은 바꾸지 마세요. CLI가 이 이름을 씁니다.
+함수 이름은 바꾸지 마세요. CLI와 웹이 이 이름을 씁니다.
 """
 
-from core.domain.rules.r001_required_fields import R001
-from core.domain.rules.r002_amount_valid import R002
-from core.domain.rules.r003_date_reversed import R003
-from core.domain.rules.r004_claim_deadline import R004
-from core.domain.rules.r005_receipt_no_missing import R005
-from core.domain.rules.r006_meal_per_person import R006
-from core.domain.rules.r007_lodging_limit import R007
-from core.domain.rules.r008_transport_limit import R008
-from core.domain.rules.r009_payment_method import R009
-from core.domain.rules.r010_receipt_no_duplicated import R010
-from core.domain.rules.r011_entertainment_attendees import R011
-from core.domain.rules.r012_entertainment_per_person import R012
-from core.domain.rules.r013_weekend_preapproval import R013
-from core.domain.rules.r014_evidence_missing import R014
-from core.domain.rules.r015_category_merchant import R015
-from core.domain.rules.r016_personal_card_reason import R016
-from core.domain.rules.r018_cash_limit import R018
+from core.domain.rules.registry import load_rules
 from core.service.input.csv_loader import CsvLoader
+from core.service.input.markdown_loader import MarkdownLoader
 from core.service.output.console_reporter import ConsoleReporter
+from core.service.output.markdown_reporter import MarkdownReporter
+from core.service.usecase.aggregate.department_aggregator import DepartmentAggregator
 from core.service.usecase.settlement import RuleBasedSettlementService
 
-LOADERS = {"csv": CsvLoader}
-REPORTERS = {"console": ConsoleReporter}
+LOADERS = {"csv": CsvLoader, "md": MarkdownLoader}
+REPORTERS = {"console": ConsoleReporter, "md": MarkdownReporter}
+AGGREGATORS = [DepartmentAggregator]
 
 
 def build_loader(fmt):
@@ -44,13 +32,11 @@ def build_loader(fmt):
 
 
 def build_service():
-    """규칙이 주입된 `SettlementService`."""
-    return RuleBasedSettlementService([
-        R001(), R002(), R003(), R004(), R005(),
-        R006(), R007(), R008(), R009(), R010(),
-        R011(), R012(), R013(), R014(), R015(),
-        R016(), R018(),
-    ])
+    """규칙과 집계가 주입된 `SettlementService`."""
+    return RuleBasedSettlementService(
+        load_rules(),
+        [aggregator() for aggregator in AGGREGATORS],
+    )
 
 
 def build_reporter(fmt):

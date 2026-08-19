@@ -59,4 +59,24 @@ class ConsoleReporter(Reporter):
         for code in sorted(counts):
             lines.append(f"{code} {names[code]}  {counts[code]}건")
 
+        # 어떤 집계가 들어 있는지 알지 못한다. 순서대로 표로 그린다.
+        for table in result.aggregations:
+            lines.append("")
+            lines.append(f"[{table.name}]")
+            lines += self._table(table.columns, table.rows)
+
         return "\n".join(lines)
+
+    def _table(self, columns, rows):
+        cells = [[f"{c:,}" if isinstance(c, int) else str(c) for c in row] for row in rows]
+        widths = [
+            max(_width(columns[i]), *(_width(r[i]) for r in cells)) if cells else _width(columns[i])
+            for i in range(len(columns))
+        ]
+        # 첫 열은 이름이고 나머지는 수치다.
+        lines = ["  ".join(_pad(c, widths[i], "left" if i == 0 else "right")
+                           for i, c in enumerate(columns)).rstrip()]
+        for row in cells:
+            lines.append("  ".join(_pad(c, widths[i], "left" if i == 0 else "right")
+                                   for i, c in enumerate(row)).rstrip())
+        return lines

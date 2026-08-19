@@ -2,10 +2,12 @@
 
 from core.domain.models import Violation
 from core.domain.rules.base import RowRule
+from core.domain.rules.registry import rule
 
 EXPENSE_TYPE = "접대비"
 
 
+@rule
 class R011(RowRule):
     code = "R011"
     name = "접대비 참석인원 누락"

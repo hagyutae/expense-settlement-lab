@@ -2,10 +2,12 @@
 
 from core.domain.models import Violation
 from core.domain.rules.base import RowRule
+from core.domain.rules.registry import rule
 
 LIMIT_DAYS = 30
 
 
+@rule
 class R004(RowRule):
     code = "R004"
     name = "청구 기한 초과"

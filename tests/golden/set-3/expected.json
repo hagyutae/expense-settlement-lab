@@ -1,0 +1,88 @@
+[
+  {
+    "claim_id": "EXP-2026-0426",
+    "is_passed": false,
+    "violations": [
+      "R017"
+    ]
+  },
+  {
+    "claim_id": "EXP-2026-0427",
+    "is_passed": false,
+    "violations": [
+      "R017"
+    ]
+  },
+  {
+    "claim_id": "EXP-2026-0428",
+    "is_passed": false,
+    "violations": [
+      "R020"
+    ]
+  },
+  {
+    "claim_id": "EXP-2026-0429",
+    "is_passed": false,
+    "violations": [
+      "R020"
+    ]
+  },
+  {
+    "claim_id": "EXP-2026-0430",
+    "is_passed": false,
+    "violations": [
+      "R021"
+    ]
+  },
+  {
+    "claim_id": "EXP-2026-0431",
+    "is_passed": false,
+    "violations": [
+      "R021"
+    ]
+  },
+  {
+    "claim_id": "EXP-2026-0432",
+    "is_passed": true,
+    "violations": []
+  },
+  {
+    "claim_id": "EXP-2026-0433",
+    "is_passed": true,
+    "violations": []
+  },
+  {
+    "claim_id": "EXP-2026-0434",
+    "is_passed": true,
+    "violations": []
+  },
+  {
+    "claim_id": "EXP-2026-0435",
+    "is_passed": false,
+    "violations": [
+      "R019"
+    ]
+  },
+  {
+    "claim_id": "EXP-2026-0436",
+    "is_passed": false,
+    "violations": [
+      "R019"
+    ]
+  },
+  {
+    "claim_id": "EXP-2026-0437",
+    "is_passed": true,
+    "violations": []
+  },
+  {
+    "claim_id": "EXP-2026-0438",
+    "is_passed": true,
+    "violations": []
+  },
+  {
+    "claim_id": "EXP-2026-0439",
+    "is_passed": true,
+    "violations": []
+  }
+]

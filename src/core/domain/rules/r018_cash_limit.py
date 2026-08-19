@@ -2,11 +2,13 @@
 
 from core.domain.models import Violation
 from core.domain.rules.base import RowRule
+from core.domain.rules.registry import rule
 
 PAYMENT_METHOD = "현금"
 LIMIT = 50_000
 
 
+@rule
 class R018(RowRule):
     code = "R018"
     name = "현금 결제 한도"

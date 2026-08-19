@@ -2,10 +2,12 @@
 
 from core.domain.models import Violation
 from core.domain.rules.base import RowRule
+from core.domain.rules.registry import rule
 
 THRESHOLD = 30_000
 
 
+@rule
 class R005(RowRule):
     code = "R005"
     name = "영수증번호 누락"

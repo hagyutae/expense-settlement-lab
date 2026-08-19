@@ -2,8 +2,10 @@
 
 from core.domain.models import Violation
 from core.domain.rules.base import RowRule
+from core.domain.rules.registry import rule
 
 
+@rule
 class R003(RowRule):
     code = "R003"
     name = "사용일자 역전"

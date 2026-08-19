@@ -2,6 +2,7 @@
 
 from core.domain.models import Violation
 from core.domain.rules.base import RowRule
+from core.domain.rules.registry import rule
 
 ALLOWED = {
     "식비": ("음식점",),
@@ -15,6 +16,7 @@ ALLOWED = {
 }
 
 
+@rule
 class R015(RowRule):
     code = "R015"
     name = "계정과목·업종 불일치"

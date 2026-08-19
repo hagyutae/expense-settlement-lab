@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""규칙 하나가 연동 지점 다섯 곳에 모두 반영됐는지 확인합니다.
+"""규칙 하나가 연동 지점 네 곳에 모두 반영됐는지 확인합니다.
 
-규칙 코드를 하나 받아 아래 다섯 곳을 훑고, 빠진 곳이 있으면 알립니다.
+규칙 코드를 하나 받아 아래 네 곳을 훑고, 빠진 곳이 있으면 알립니다.
 
 1. 규칙 구현   src/core/domain/rules/rXXX_*.py
 2. 테스트      tests/rules/test_rXXX.py
 3. 픽스처      tests/rules/fixtures/rXXX.csv
-4. 앱 조립     src/application/container.py 의 import 와 build_service
-5. 테스트 조립 tests/container.py 의 import 와 all_rules
+4. 레지스트리  @rule 데코레이터. 조립은 load_rules() 가 맡습니다
 
 사용: uv run python check_rule.py R011
 빠진 곳이 하나라도 있으면 종료 코드 1 로 끝냅니다.
@@ -36,24 +35,19 @@ def normalize(arg):
 
 
 def registered_in(path, cls):
-    """import 문과 인스턴스 생성이 모두 있으면 등록된 것으로 봅니다."""
+    """`@rule` 이 클래스 바로 위에 붙어 있으면 등록된 것으로 봅니다."""
     if not path.is_file():
         return False, f"{path} 파일이 없습니다"
     text = path.read_text(encoding="utf-8")
-    has_import = re.search(rf"import\s+{cls}\b", text) is not None
-    has_use = re.search(rf"\b{cls}\s*\(", text) is not None
-    if has_import and has_use:
-        return True, "import 와 목록 등록 확인"
-    missing = []
-    if not has_import:
-        missing.append("import")
-    if not has_use:
-        missing.append("목록 등록")
-    return False, f"{', '.join(missing)} 없음"
+    if re.search(rf"@rule\s*\nclass\s+{cls}\b", text) is None:
+        return False, "@rule 데코레이터 없음"
+    if re.search(r"from core\.domain\.rules\.registry import rule", text) is None:
+        return False, "registry import 없음"
+    return True, "@rule 확인"
 
 
 def check(root, low, cls):
-    """다섯 곳을 (이름, 통과 여부, 설명) 목록으로 돌려줍니다."""
+    """네 곳을 (이름, 통과 여부, 설명) 목록으로 돌려줍니다."""
     results = []
 
     matches = sorted((root / "src/core/domain/rules").glob(f"{low}_*.py"))
@@ -70,8 +64,8 @@ def check(root, low, cls):
     results.append(("픽스처", fixture.is_file(),
                     fixture.name if fixture.is_file() else f"{low}.csv 파일이 없습니다"))
 
-    results.append(("앱 조립", *registered_in(root / "src/application/container.py", cls)))
-    results.append(("테스트 조립", *registered_in(root / "tests/container.py", cls)))
+    source = matches[0] if matches else root / "src/core/domain/rules" / f"{low}_.py"
+    results.append(("레지스트리", *registered_in(source, cls)))
 
     return results
 
@@ -98,7 +92,7 @@ def main(argv):
     if missing:
         print(f"\n빠진 곳 {len(missing)}: {', '.join(missing)}")
         return 1
-    print("\n다섯 곳 모두 반영됐습니다.")
+    print("\n네 곳 모두 반영됐습니다.")
     return 0
 
 

@@ -2,10 +2,12 @@
 
 from core.domain.models import Violation
 from core.domain.rules.base import RowRule
+from core.domain.rules.registry import rule
 
 PAYMENT_METHOD = "개인카드"
 
 
+@rule
 class R016(RowRule):
     code = "R016"
     name = "개인카드 사용 사유 누락"

@@ -2,10 +2,12 @@
 
 from core.domain.models import Violation
 from core.domain.rules.base import RowRule
+from core.domain.rules.registry import rule
 
 LIMIT = 50_000
 
 
+@rule
 class R014(RowRule):
     code = "R014"
     name = "적격증빙 누락"

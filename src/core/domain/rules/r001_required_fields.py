@@ -2,6 +2,7 @@
 
 from core.domain.models import Violation
 from core.domain.rules.base import RowRule
+from core.domain.rules.registry import rule
 
 REQUIRED = (
     "claim_id", "employee_id", "department", "used_date", "claim_date",
@@ -9,6 +10,7 @@ REQUIRED = (
 )
 
 
+@rule
 class R001(RowRule):
     code = "R001"
     name = "필수 항목 누락"

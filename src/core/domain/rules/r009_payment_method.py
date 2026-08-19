@@ -2,10 +2,12 @@
 
 from core.domain.models import Violation
 from core.domain.rules.base import RowRule
+from core.domain.rules.registry import rule
 
 ALLOWED = ("법인카드", "개인카드", "현금")
 
 
+@rule
 class R009(RowRule):
     code = "R009"
     name = "결제수단 값 오류"

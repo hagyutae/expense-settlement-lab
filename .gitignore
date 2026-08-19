@@ -4,6 +4,10 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 
+# 웹 화면
+ui/node_modules/
+ui/dist/
+
 # 업로드 결과물
 uploads/
 outputs/

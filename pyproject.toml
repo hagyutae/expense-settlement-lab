@@ -3,7 +3,11 @@ name = "expense-settlement-lab"
 version = "0.1.0"
 description = "경비 정산 시스템 실습"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "fastapi>=0.141.1",
+    "python-multipart>=0.0.32",
+    "uvicorn[standard]>=0.52.3",
+]
 
 [project.scripts]
 settle = "application.cli.main:main"
