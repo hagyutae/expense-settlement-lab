@@ -1,0 +1,395 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "경비 정산 API",
+        "description": "경비 청구 파일을 올리면 사내 경비 규정으로 판정하고 요약과 집계를 함께 돌려줍니다.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/settle": {
+            "post": {
+                "summary": "청구 파일 판정",
+                "description": "청구 파일 하나를 받아 요약과 판정, 집계를 돌려줍니다.\n\n확장자로 입력 형식을 정합니다. `.csv` 와 `.md` 를 받습니다.",
+                "operationId": "settle_api_settle_post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_settle_api_settle_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SettlementResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "형식이 다르거나 읽을 수 없는 파일",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AggregationTable": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "표 제목",
+                        "examples": [
+                            "부서별 정산 요약"
+                        ]
+                    },
+                    "columns": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Columns",
+                        "description": "열 이름",
+                        "examples": [
+                            [
+                                "부서",
+                                "청구",
+                                "통과",
+                                "반려",
+                                "반려율",
+                                "청구금액",
+                                "반려금액"
+                            ]
+                        ]
+                    },
+                    "rows": {
+                        "items": {
+                            "items": {},
+                            "type": "array"
+                        },
+                        "type": "array",
+                        "title": "Rows",
+                        "description": "행. columns 순서를 따른다",
+                        "examples": [
+                            [
+                                [
+                                    "개발2팀",
+                                    45,
+                                    37,
+                                    8,
+                                    17.8,
+                                    3333500,
+                                    786000
+                                ]
+                            ]
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "columns",
+                    "rows"
+                ],
+                "title": "AggregationTable"
+            },
+            "Body_settle_api_settle_post": {
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "contentMediaType": "application/octet-stream",
+                        "title": "File"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "file"
+                ],
+                "title": "Body_settle_api_settle_post"
+            },
+            "ErrorResponse": {
+                "properties": {
+                    "detail": {
+                        "type": "string",
+                        "title": "Detail",
+                        "description": "오류 내용",
+                        "examples": [
+                            "지원하지 않는 입력 형식입니다: xlsx (가능: csv, md)"
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "detail"
+                ],
+                "title": "ErrorResponse"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "Judgement": {
+                "properties": {
+                    "claim_id": {
+                        "type": "string",
+                        "title": "Claim Id",
+                        "description": "청구ID",
+                        "examples": [
+                            "EXP-2026-0266"
+                        ]
+                    },
+                    "employee_name": {
+                        "type": "string",
+                        "title": "Employee Name",
+                        "description": "성명",
+                        "examples": [
+                            "최수아"
+                        ]
+                    },
+                    "department": {
+                        "type": "string",
+                        "title": "Department",
+                        "description": "부서",
+                        "examples": [
+                            "개발2팀"
+                        ]
+                    },
+                    "used_date": {
+                        "type": "string",
+                        "title": "Used Date",
+                        "description": "사용일자. 원본 문자열 그대로",
+                        "examples": [
+                            "2026-06-24"
+                        ]
+                    },
+                    "expense_type": {
+                        "type": "string",
+                        "title": "Expense Type",
+                        "description": "계정과목",
+                        "examples": [
+                            "교육훈련비"
+                        ]
+                    },
+                    "amount": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Amount",
+                        "description": "금액. 숫자로 읽히지 않으면 null",
+                        "examples": [
+                            450000
+                        ]
+                    },
+                    "is_passed": {
+                        "type": "boolean",
+                        "title": "Is Passed",
+                        "description": "위반이 하나도 없으면 참",
+                        "examples": [
+                            false
+                        ]
+                    },
+                    "violations": {
+                        "items": {
+                            "$ref": "#/components/schemas/Violation"
+                        },
+                        "type": "array",
+                        "title": "Violations",
+                        "description": "위반 목록. 규칙 코드 순"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "claim_id",
+                    "employee_name",
+                    "department",
+                    "used_date",
+                    "expense_type",
+                    "amount",
+                    "is_passed",
+                    "violations"
+                ],
+                "title": "Judgement"
+            },
+            "SettlementResponse": {
+                "properties": {
+                    "summary": {
+                        "$ref": "#/components/schemas/Summary",
+                        "description": "건수 요약"
+                    },
+                    "judgements": {
+                        "items": {
+                            "$ref": "#/components/schemas/Judgement"
+                        },
+                        "type": "array",
+                        "title": "Judgements",
+                        "description": "청구 건별 판정. 파일의 행 순서를 유지한다"
+                    },
+                    "aggregations": {
+                        "items": {
+                            "$ref": "#/components/schemas/AggregationTable"
+                        },
+                        "type": "array",
+                        "title": "Aggregations",
+                        "description": "집계 표 목록"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "summary",
+                    "judgements",
+                    "aggregations"
+                ],
+                "title": "SettlementResponse"
+            },
+            "Summary": {
+                "properties": {
+                    "total": {
+                        "type": "integer",
+                        "title": "Total",
+                        "description": "전체 청구 건수",
+                        "examples": [
+                            45
+                        ]
+                    },
+                    "passed": {
+                        "type": "integer",
+                        "title": "Passed",
+                        "description": "통과 건수",
+                        "examples": [
+                            37
+                        ]
+                    },
+                    "rejected": {
+                        "type": "integer",
+                        "title": "Rejected",
+                        "description": "반려 건수",
+                        "examples": [
+                            8
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "total",
+                    "passed",
+                    "rejected"
+                ],
+                "title": "Summary"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    },
+                    "input": {
+                        "title": "Input"
+                    },
+                    "ctx": {
+                        "type": "object",
+                        "title": "Context"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            },
+            "Violation": {
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "title": "Code",
+                        "description": "규칙 코드",
+                        "examples": [
+                            "R021"
+                        ]
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "규칙 이름",
+                        "examples": [
+                            "교육훈련비 사전승인"
+                        ]
+                    },
+                    "message": {
+                        "type": "string",
+                        "title": "Message",
+                        "description": "위반 내용",
+                        "examples": [
+                            "20만원을 초과하는 교육훈련비는 사전승인 번호가 필요합니다"
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "code",
+                    "name",
+                    "message"
+                ],
+                "title": "Violation"
+            }
+        }
+    }
+}
